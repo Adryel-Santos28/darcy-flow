@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DARCY FLOW · Regras do Firestore</title>
+<style>
+  :root{--navy:#0b2545;--blue:#1565c0;--ink:#10233b}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eaf1fa,#f7fafd 40%);color:var(--ink);padding:24px 16px 48px}
+  .wrap{max-width:720px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .mark{width:44px;height:44px;border-radius:12px;background:var(--navy);display:grid;place-items:center}
+  .mark svg{width:26px;height:26px}
+  h1{font-size:20px;margin:0;color:var(--navy);letter-spacing:.2px}
+  .sub{font-size:13px;color:#5b6b80;margin:2px 0 0}
+  .card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 6px 24px rgba(11,37,69,.10);margin-bottom:16px}
+  ol{margin:0;padding-left:20px;font-size:15px;line-height:1.6}
+  ol li{margin-bottom:8px}
+  textarea{width:100%;min-height:190px;border:1px solid #cfdae7;border-radius:12px;padding:14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.55;background:#0b1220;color:#eaf2ff;resize:vertical}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:15px 18px;font-size:16px;font-weight:600;color:#fff;background:linear-gradient(180deg,#1976d2,#12559b);box-shadow:0 4px 0 #0d3f76;cursor:pointer;margin-top:12px}
+  .btn:active{transform:translateY(1px);box-shadow:0 2px 0 #0d3f76}
+  .btn.ok{background:linear-gradient(180deg,#2e9e5b,#1f7a45);box-shadow:0 4px 0 #175c34}
+  .hint{font-size:13px;color:#5b6b80;margin-top:10px;line-height:1.5}
+  .warn{background:#fff8e6;border:1px solid #f2d794;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.5;color:#6a4b06}
+  .back{display:inline-block;margin-top:8px;font-size:14px;color:var(--blue);text-decoration:none}
+  code{background:#eef3f9;padding:1px 5px;border-radius:5px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M6 21V9a6 6 0 0 1 12 0v12"/><path d="M9 15h6"/></svg>
+    </div>
+    <div>
+      <h1>Regras do Firestore</h1>
+      <p class="sub">DARCY FLOW · colar no console do Firebase</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <ol>
+      <li>Toque no botão azul abaixo para copiar as regras.</li>
+      <li>Volte na aba <b>Regras</b> do Firestore, no console do Firebase.</li>
+      <li>Clique dentro do editor, aperte <b>Ctrl + A</b> e depois <b>Delete</b> (no Mac: Cmd + A).</li>
+      <li>Aperte <b>Ctrl + V</b> e confira: a primeira linha tem que ser <code>rules_version = '2';</code></li>
+      <li>Toque em <b>Publicar</b>.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <textarea id="rules" readonly spellcheck="false">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /darcyflow/{doc=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}</textarea>
+    <button class="btn" id="copy">Copiar regras</button>
+    <p class="hint">Se o botão não copiar, clique dentro da caixa preta, aperte Ctrl + A e depois Ctrl + C.</p>
+  </div>
+
+  <div class="card">
+    <div class="warn">
+      Não cole direto do WhatsApp: o aplicativo costuma levar junto a palavra <b>code</b> e caracteres invisíveis, e é isso que faz o console recusar. Copiando desta página o texto vai limpo.
+    </div>
+    <a class="back" href="./">Voltar para o DARCY FLOW</a>
+  </div>
+</div>
+<script>
+  var btn = document.getElementById('copy');
+  var box = document.getElementById('rules');
+  function done() {
+    btn.textContent = 'Copiado! Agora cole no console e publique';
+    btn.classList.add('ok');
+    setTimeout(function () {
+      btn.textContent = 'Copiar regras';
+      btn.classList.remove('ok');
+    }, 5000);
+  }
+  btn.addEventListener('click', function () {
+    var text = box.value;
+    function fallback() {
+      box.focus();
+      box.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      done();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    } else {
+      fallback();
+    }
+  });
+</script>
+</body>
+</html>
