@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DARCY FLOW — migrar para o Firebase</title>
+<style>
+  :root { --marinho:#0b2545; --azul:#1b6ca8; --claro:#eef4fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:linear-gradient(160deg,#f7fbff,#e6eef8 60%,#dbe7f5); color:#132033; }
+  header { background:var(--marinho); color:#fff; padding:20px 18px; }
+  header h1 { margin:0; font-size:19px; letter-spacing:.02em; }
+  header p { margin:6px 0 0; font-size:13px; color:#bcd3ea; }
+  main { padding:16px 14px 40px; max-width:760px; margin:0 auto; }
+  .card { background:#fff; border-radius:14px; padding:16px; margin:14px 0; box-shadow:0 6px 18px rgba(11,37,69,.08); }
+  h2 { font-size:15px; margin:0 0 10px; color:var(--marinho); }
+  ol,ul { margin:0; padding-left:20px; }
+  li { font-size:14px; line-height:1.55; margin-bottom:8px; }
+  code { background:var(--claro); border-radius:6px; padding:1px 6px; font-size:13px; }
+  a { color:var(--azul); word-break:break-word; }
+  .ok { background:#e8f6ee; border-left:4px solid #1e9e5a; padding:10px 12px; border-radius:8px; font-size:13px; }
+  .aviso { background:#fff7e6; border-left:4px solid #d99a00; padding:10px 12px; border-radius:8px; font-size:13px; }
+  .voltar { display:inline-block; margin-top:8px; font-size:13px; text-decoration:none; background:var(--marinho); color:#fff; padding:10px 14px; border-radius:10px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>DARCY FLOW · migrar para o Firebase</h1>
+  <p>EE Prof. Darcy Silveira Vaz · Colina/SP</p>
+</header>
+<main>
+  <div class="card">
+    <h2>Antes de começar</h2>
+    <div class="ok">As telas, as senhas individuais, a aprovação do administrador, os relatórios e o
+    funcionamento offline continuam iguais. Muda só o motor que guarda os dados, e o e-mail de
+    confirmação passa a ser gratuito pelo Firebase.</div>
+  </div>
+
+  <div class="card">
+    <h2>1. Criar o projeto</h2>
+    <ol>
+      <li>Abra <a href="https://console.firebase.google.com">console.firebase.google.com</a> e entre com a conta Google da escola.</li>
+      <li>Toque em <code>Criar projeto</code>, use o nome <code>darcy-flow</code> e aceite o ID sugerido.</li>
+      <li>Desative o Google Analytics e confirme. Fique no plano <code>Spark</code> (gratuito).</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>2. Registrar o aplicativo web</h2>
+    <ol>
+      <li>No projeto, toque no ícone <code>&lt;/&gt;</code> (Web).</li>
+      <li>Apelido <code>darcy-flow-web</code>, sem marcar Hosting agora.</li>
+      <li>Copie o bloco <code>firebaseConfig</code> que aparece. É ele que você cola no sistema.</li>
+    </ol>
+    <div class="aviso">Esses valores são públicos (vão no navegador). Senha, token de serviço e chave de
+    administrador nunca entram no código.</div>
+  </div>
+
+  <div class="card">
+    <h2>3. Ativar login por e-mail e senha</h2>
+    <ol>
+      <li><code>Authentication</code> → <code>Começar</code> → <code>E-mail/senha</code> → ativar → salvar.</li>
+      <li>Em <code>Templates</code>, escolha Português do Brasil e revise o e-mail de verificação.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>4. Criar o banco e publicar as regras</h2>
+    <ol>
+      <li><code>Firestore Database</code> → <code>Criar banco</code> → local <code>southamerica-east1</code> → modo Produção.</li>
+      <li>Aba <code>Regras</code>: cole o conteúdo de <code>firebase/firestore.rules</code> e publique.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>5. Ligar o sistema ao projeto</h2>
+    <ol>
+      <li>Abra o sistema e entre como administrador.</li>
+      <li><code>Configurações</code> → <code>Firebase</code> → cole a configuração → <code>Salvar e testar</code>.</li>
+      <li>Toque em <code>Migrar dados para o Firebase</code> para enviar turmas, alunos, banheiros, cabines, movimentações, alertas e o resto.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>O que depende do plano pago</h2>
+    <ul>
+      <li>Cloud Functions exigem plano Blaze. O sistema faz a lógica no navegador e o Firestore aplica as regras no servidor.</li>
+      <li>Envio de e-mail com domínio próprio e notificação com o app fechado também entram no Blaze, que tem cota gratuita mensal.</li>
+    </ul>
+  </div>
+
+  <a class="voltar" href="index.html">Voltar ao sistema</a>
+</main>
+</body>
+</html>
