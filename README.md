@@ -20,7 +20,7 @@ Senha de todos os perfis de demonstração: `darcy123`
 
 ## Aplicativo Android
 
-Baixe `darcy-flow-1.2.apk` nesta mesma pasta e instale no aparelho. O aplicativo
+Baixe `darcy-flow-1.3.apk` nesta mesma pasta e instale no aparelho. O aplicativo
 funciona sem internet e sincroniza com a web quando há conexão.
 
 ## Sincronização
